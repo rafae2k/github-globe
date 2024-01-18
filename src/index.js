@@ -36,7 +36,12 @@ function init() {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   // renderer.outputEncoding = THREE.sRGBEncoding;
-  document.body.appendChild(renderer.domElement);
+  var ajaxContent = document.getElementById('ajaxContent');
+  ajaxContent.appendChild(renderer.domElement);
+
+  if (!ajaxContent) {
+    document.body.appendChild(renderer.domElement);
+  }
 
   // Initialize scene, light
   scene = new Scene();

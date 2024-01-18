@@ -37,6 +37,7 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   // renderer.outputEncoding = THREE.sRGBEncoding;
   var ajaxContent = document.getElementById('ajaxContent');
+  console.log(ajaxContent);
   ajaxContent.appendChild(renderer.domElement);
 
   if (!ajaxContent) {

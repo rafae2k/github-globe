@@ -1,19 +1,15 @@
 import ThreeGlobe from "three-globe";
-import { WebGLRenderer, Scene } from "three";
 import {
+  WebGLRenderer,
+  Scene,
   PerspectiveCamera,
   AmbientLight,
   DirectionalLight,
   Color,
   Fog,
-  // AxesHelper,
-  // DirectionalLightHelper,
-  // CameraHelper,
   PointLight,
-  SphereGeometry,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { createGlowMesh } from "three-glow-mesh";
 import countries from "./files/globe-data-min.json";
 import travelHistory from "./files/my-flights.json";
 import airportHistory from "./files/my-airports.json";
@@ -34,13 +30,17 @@ function init() {
   // Initialize renderer
   renderer = new WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  // renderer.setSize(window.innerWidth, window.innerHeight);
   // renderer.outputEncoding = THREE.sRGBEncoding;
-  var ajaxContent = document.getElementById('ajaxContent');
-  console.log(ajaxContent);
-  ajaxContent.appendChild(renderer.domElement);
 
-  if (!ajaxContent) {
+  const mapContainer = document.getElementById('mapContainer');
+  const mapContainerWidth = mapContainer.offsetWidth;
+  const mapContainerHeight = mapContainer.offsetHeight;
+
+  renderer.setSize(mapContainerWidth, mapContainerHeight);
+  mapContainer.appendChild(renderer.domElement);
+
+  if (!mapContainer) {
     document.body.appendChild(renderer.domElement);
   }
 
@@ -115,13 +115,7 @@ function initGlobe() {
     .atmosphereColor("#fff")
     .atmosphereAltitude(0.25)
     .hexPolygonColor((e) => {
-      if (
-        ["KGZ", "KOR", "THA", "RUS", "UZB", "IDN", "KAZ", "MYS"].includes(
-          e.properties.ISO_A3
-        )
-      ) {
-        return "rgba(0,0,0, 1)";
-      } else return "rgba(0,0,0, 0.7)";
+      return "rgba(0,0,0, 0.7)";
     });
 
   // NOTE Arc animations are followed after the globe enters the scene
@@ -175,7 +169,7 @@ function initGlobe() {
 function onMouseMove(event) {
   mouseX = event.clientX - windowHalfX;
   mouseY = event.clientY - windowHalfY;
-  // console.log("x: " + mouseX + " y: " + mouseY);
+  console.log("x: " + mouseX + " y: " + mouseY);
 }
 
 function onWindowResize() {
@@ -199,7 +193,7 @@ function animate() {
 
 
   // Rotate the globe
-  Globe.rotation.y += -0.003; // Adjust this value to change the speed of rotation
+  Globe.rotation.y += -0.003;
 
   // Update the scene
   renderer.render(scene, camera);
